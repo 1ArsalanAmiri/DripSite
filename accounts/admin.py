@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .models import User, Post, Category, Profile
+from .models import *
 
 
 class UserCreationForm(forms.ModelForm):
@@ -58,7 +58,7 @@ class CustomUserAdmin(BaseUserAdmin):
     )
 
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Profile)
+
 
 
 
