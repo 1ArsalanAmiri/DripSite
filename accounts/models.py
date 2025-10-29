@@ -40,7 +40,9 @@ class User(AbstractBaseUser , PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    first_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50 , default="")
+    gender = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female')) , default="M")
     # is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
