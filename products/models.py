@@ -49,7 +49,6 @@ class Collection(models.Model):
 
 
 
-
 class Product(models.Model):
     title = models.CharField(max_length=255)
     collection = models.ForeignKey(Collection, on_delete=models.SET_NULL, null=True, blank=True,related_name='products')
@@ -84,7 +83,6 @@ class Product(models.Model):
 
 
 
-
 class ProductVariant(models.Model):
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='variants')
     color = models.CharField(max_length=50)
@@ -109,7 +107,6 @@ class ProductVariant(models.Model):
 
 
 
-
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
     filename = models.CharField(max_length=255)
@@ -128,6 +125,3 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"{self.product.title}{self.product.color} - {self.filename}"
-
-
-

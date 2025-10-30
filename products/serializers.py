@@ -9,17 +9,16 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'filename', 'alt_text', 'order', 'image_type']
 
 
-
 class ProductVariantSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
     product_title = serializers.SerializerMethodField()
 
     class Meta:
         model = ProductVariant
-        fields = ['product_title','color', 'size', 'stock']
+        fields = ['product','product_title', 'color', 'size', 'stock']
 
     def get_product_title(self, obj):
         return obj.product.title if obj.product else None
-
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -41,8 +40,6 @@ class ProductSerializer(serializers.ModelSerializer):
         except Exception:
             pass
         return data
-
-
 
 
 class CollectionSerializer(serializers.ModelSerializer):
