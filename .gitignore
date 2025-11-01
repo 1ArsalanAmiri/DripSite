@@ -44,3 +44,18 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# =====================
+# IDEs
+# =====================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =====================
+# Docker
+# =====================
+*.env
+docker-compose.override.yml
+docker-compose.override.yaml
