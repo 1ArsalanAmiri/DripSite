@@ -18,3 +18,9 @@ sqlparse==0.5.3
 whitenoise==6.8.2
 coreapi
 setuptools
+django-redis
+django-ratelimit
+django-allauth
+cryptography
+dj-rest-auth
+whitenoise

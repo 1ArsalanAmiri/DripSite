@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Email</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h2>Manage Your Emails</h2>
+
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="POST" class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Update</button>
+      </form>
+
+      <div class="info">
+        <p>Current Emails:</p>
+        <ul>
+          {% for email in user.emailaddress_set.all %}
+            <li>
+              {{ email.email }} {% if email.verified %} (Verified) {% else %} (Not Verified) {% endif %}
+            </li>
+          {% empty %}
+            <li>No emails added yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

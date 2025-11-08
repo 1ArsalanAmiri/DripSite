@@ -1,15 +1,21 @@
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 from .models import Product, ProductImage, Collection, ProductVariant
-
+from rest_framework.permissions import IsAdminUser
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
+
+    permission_classes = [IsAdminUser]
+
     class Meta:
         model = ProductImage
         fields = ['id', 'filename', 'alt_text', 'order', 'image_type']
 
 
+
 class ProductVariantSerializer(serializers.ModelSerializer):
+
+    permission_classes = [IsAdminUser]
     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
     product_title = serializers.SerializerMethodField()
 
@@ -21,7 +27,11 @@ class ProductVariantSerializer(serializers.ModelSerializer):
         return obj.product.title if obj.product else None
 
 
+
+
 class ProductSerializer(serializers.ModelSerializer):
+
+    permission_classes = [IsAdminUser]
     images = ProductImageSerializer(many=True, read_only=True)
     collection = serializers.PrimaryKeyRelatedField(queryset=Collection.objects.all())
     variants = ProductVariantSerializer(many=True, read_only=True)
@@ -43,6 +53,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CollectionSerializer(serializers.ModelSerializer):
+    permission_classes = [IsAdminUser]
     products = ProductSerializer(many=True, read_only=True)
 
     class Meta:

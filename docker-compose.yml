@@ -11,3 +11,13 @@ services:
     environment:
       - SECRET_KEY=django-insecure-y9t#r_4t-rz(t04k@0*+(-o8(*t!1%5p9vi-_p@@d!74
       - DEBUG=True
+      - GOOGLE_CLIENT_ID=22060145669-qkliptv7066ilrrae6sbjartln61n71s.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"

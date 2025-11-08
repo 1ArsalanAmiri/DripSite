@@ -1,0 +1,143 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+<!-- فونت شبیه اسپاتیفای -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Montserrat', Arial, sans-serif;
+        /* گرادیان تیره‌تر و شیک */
+        background: linear-gradient(135deg, #4b0082 0%, #1a237e 100%);
+        color: #ffffff;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.2em;
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+
+    p {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 1.1em;
+    }
+
+    .buttons {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .btn {
+        display: inline-block;
+        background-color: rgba(0,0,0,0.6);
+        color: #ffffff;
+        padding: 12px 24px;
+        margin: 5px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s, transform 0.2s;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .btn:hover {
+        background-color: rgba(0,0,0,0.8);
+        transform: translateY(-2px);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        background-color: rgba(255,255,255,0.1);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: transform 0.3s, background-color 0.3s;
+        text-align: center;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255,255,255,0.2);
+    }
+
+    .card a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 10px;
+        transition: color 0.3s;
+    }
+
+    .card a:hover {
+        color: #ffdd57;
+    }
+
+    /* استایل فرم logout */
+    .logout-form {
+        display: inline-block;
+        margin: 0;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to Home Page</h1>
+
+    {% if user.is_authenticated %}
+        <p style="font-weight:600; font-size:16px; margin-bottom:10px;">
+            You're Logged in as : <span style="color:#ffdd57">{{ user.email }}</span>
+        </p>
+    {% else %}
+        <p style="font-weight:600; font-size:16px; margin-bottom:10px;">You are not logged in.</p>
+    {% endif %}
+
+    <p>Explore your dashboard and available endpoints below.</p>
+
+    <div class="buttons">
+        <a href="{% url 'product-list' %}" class="btn">Go to Products</a>
+
+        {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'account_logout' %}" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="btn">Logout</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <h2 style="text-align:center; text-shadow: 1px 1px 4px rgba(0,0,0,0.3); margin-bottom:20px;">Available Endpoints</h2>
+    <div class="grid">
+        <div class="card"><a href="/admin/">Admin Panel</a></div>
+        <div class="card"><a href="/api/accounts/">API Accounts</a></div>
+        <div class="card"><a href="/api/products/">API Products</a></div>
+        <div class="card"><a href="{% url 'account_login' %}">Login</a></div>
+        <div class="card"><a href="{% url 'account_signup' %}">Signup</a></div>
+        <div class="card"><a href="{% url 'account_email' %}">Email Settings</a></div>
+        <div class="card"><a href="{% url 'account_change_password' %}">Change Password</a></div>
+        <div class="card"><a href="{% url 'account_reset_password' %}">Reset Password</a></div>
+        <div class="card"><a href="{% url 'account_email_verification_sent' %}">Confirm Email</a></div>
+    </div>
+</div>
+</body>
+</html>
