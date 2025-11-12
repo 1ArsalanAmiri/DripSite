@@ -185,6 +185,5 @@ class AuthViewSet(viewsets.ViewSet):
         return Response({"message": "OTP sent to your email"}, status=200)
 
 
-
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter

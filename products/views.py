@@ -1,16 +1,15 @@
 from django.utils.decorators import method_decorator
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction
-
-from .models import Product, ProductImage, Collection, ProductVariant
-from .serializers import ProductSerializer, ProductImageSerializer, CollectionSerializer , ProductVariantSerializer
+from .serializers import *
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Product.objects.all().prefetch_related('images')
     serializer_class = ProductSerializer
     lookup_field = 'slug'
@@ -47,22 +46,20 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-
-
-
 class ProductImageViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAdminUser]
     queryset = ProductImage.objects.select_related("product")
     serializer_class = ProductImageSerializer
 
 
-
 class ProductVariantViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAdminUser]
     queryset = ProductVariant.objects.select_related("product")
     serializer_class = ProductVariantSerializer
 
 
-
 class CollectionViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAdminUser]
     queryset = Collection.objects.all().prefetch_related('products')
     serializer_class = CollectionSerializer
     lookup_field = 'slug'
